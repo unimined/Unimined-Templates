@@ -1,4 +1,4 @@
-package com.example;
+package net.minecraft.src;
 
 import net.minecraft.src.BaseModMp;
 
