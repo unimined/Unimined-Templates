@@ -1,6 +1,6 @@
 This template creates a Jarmod project that will compile to having static, Jarmod patches to the official minecraft jar.
 
-you can disable that with `compiletimeTransforms`, but then the user is required to load the mod via https://github.com/unimined/JarModAgent as that's the backend for the dev env.
+~~you can disable that with `compiletimeTransforms`, but then the user is required to load the mod via https://github.com/unimined/JarModAgent as that's the backend for the dev env.~~ this doesn't currently support remapping and so isn't very useful
 
 The benefit to using JarModAgent is that it'll use [ClassTransform](https://github.com/Lenni0451/ClassTransform)
 
