@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("xyz.wagyourtail.unimined") version "1.0.1"
+    id("xyz.wagyourtail.unimined") version "1.0.2"
 }
 
 group = "com.example"
@@ -22,11 +22,21 @@ val server by sourceSets.creating
 tasks.register<Jar>("clientJar") {
     from(client.output)
     archiveClassifier.set("client")
+    manifest {
+        attributes(
+            "JarModAgent-Transforms" to "exampleModId-client.transform"
+        )
+    }
 }
 
 tasks.register<Jar>("serverJar") {
     from(server.output)
     archiveClassifier.set("server")
+    manifest {
+        attributes(
+            "JarModAgent-Transforms" to "exampleModId-server.transform"
+        )
+    }
 }
 
 val minecraftVersion = project.properties["minecraft_version"] as String
@@ -71,4 +81,8 @@ tasks.withType<JavaCompile> {
     if (JavaVersion.current().isJava9Compatible) {
         options.release.set(8)
     }
+}
+
+tasks.jar {
+    enabled = false
 }
