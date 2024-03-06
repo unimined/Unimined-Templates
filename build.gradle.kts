@@ -1,88 +1,82 @@
 plugins {
     id("java")
-    id("xyz.wagyourtail.unimined") version "1.0.2"
+    id("xyz.wagyourtail.unimined") version "1.2.0-SNAPSHOT"
+    id("xyz.wagyourtail.jvmdowngrader") version "0.0.1-SNAPSHOT"
 }
 
 group = "com.example"
 version = "1.0-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
     mavenCentral()
     maven("https://maven.wagyourtail.xyz/releases")
-}
-
-val client by sourceSets.creating
-val server by sourceSets.creating
-
-tasks.register<Jar>("clientJar") {
-    from(client.output)
-    archiveClassifier.set("client")
-    manifest {
-        attributes(
-            "JarModAgent-Transforms" to "exampleModId-client.transform"
-        )
-    }
-}
-
-tasks.register<Jar>("serverJar") {
-    from(server.output)
-    archiveClassifier.set("server")
-    manifest {
-        attributes(
-            "JarModAgent-Transforms" to "exampleModId-server.transform"
-        )
-    }
+    maven("https://maven.wagyourtail.xyz/snapshots")
+    mavenLocal()
 }
 
 val minecraftVersion = project.properties["minecraft_version"] as String
 
-unimined.minecraft(client, server) {
-    version(minecraftVersion)
-    side(this.sourceSet.name) // a trick because we named them based on the sides
+
+val forgeDowngraded by sourceSets.creating {
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+}
+
+repositories {
+    maven("https://maven.wagyourtail.xyz/releases") {
+        name = "wagyourtail releases"
+    }
+    maven("https://repo.spongepowered.org/maven") {
+        name = "sponge"
+    }
+    mavenCentral()
+    maven("https://jitpack.io") {
+        name = "jitpack"
+    }
+}
+
+unimined.minecraft(sourceSets.main.get(), forgeDowngraded) {
+    version(project.properties["minecraft_version"] as String)
 
     mappings {
-        retroMCP()
-        // mcp("legacy", project.properties["mapping_version"] as String)
-
-        stub.withMappings("mcp") {
-            c("ModLoader", "net/minecraft/src/ModLoader")
-            c("BaseMod", "net/minecraft/src/BaseMod")
-            c("ModLoaderMp", "net/minecraft/src/ModLoaderMp")
-            c("BaseModMp", "net/minecraft/src/BaseModMp")
-            c("mod_exampleModId", "net/minecraft/src/mod_exampleModId")
-            // you can add more as you need them...
-        }
+        searge()
+        mcp("stable", "12-1.7.10")
     }
 
-    jarMod {
-        transforms("exampleModId-${sourceSet.name}.transform")
+    minecraftForge {
+        loader(project.properties["forge_version"] as String)
+//        mixinConfig("modid.mixins.json")
+    }
 
-        // WARNING: this will compile your jarmods in a way that'll include patched mojang classes.
-        // the benefit is not using JarModAgent at runtime.
-        // also, JarModAgent currently doesn't support remapping transforms, so this won't actually work with false...
-        // this will be fixed in the future.
-        compiletimeTransforms = true
+    defaultRemapJar = false
+
+    if (sourceSet == sourceSets.main.get()) {
+        runs.off = true
+    }
+
+    if (sourceSet == forgeDowngraded) {
+        remap(jvmdg.defaultShadeTask.get(), "remapJar") {
+            archiveClassifier = "final"
+        }
     }
 }
 
 dependencies {
-    "clientJarMod"("risugami:modloader:${minecraftVersion}")
-    "clientJarMod"("modloadermp:modloadermp:${minecraftVersion}:client")
+    "modImplementation"("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:"+project.properties["unimixins_version"]+":dev")
 
-    "serverJarMod"("modloadermp:modloadermp:${minecraftVersion}:server")
+    "forgeDowngradedImplementation"("xyz.wagyourtail.jvmdowngrader:jvmdowngrader-java-api:${jvmdg.version}:downgraded-8")
+    "forgeDowngradedImplementation"(jvmdg.defaultTask.get().outputs.files)
+
 }
 
-tasks.withType<JavaCompile> {
-    if (JavaVersion.current().isJava9Compatible) {
-        options.release.set(8)
-    }
+tasks.compileJava {
+    options.release.set(17)
 }
 
-tasks.jar {
-    enabled = false
+tasks.build {
+    dependsOn("remapJar")
 }
