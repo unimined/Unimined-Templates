@@ -1,3 +1,5 @@
+import xyz.wagyourtail.unimined.api.minecraft.task.RemapJarTask
+
 plugins {
     id("java")
     id("xyz.wagyourtail.unimined") version "1.2.0-SNAPSHOT"
@@ -8,8 +10,12 @@ group = "com.example"
 version = "1.0-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
 }
 
 repositories {
@@ -20,11 +26,6 @@ repositories {
 }
 
 val minecraftVersion = project.properties["minecraft_version"] as String
-
-
-val forgeDowngraded by sourceSets.creating {
-    runtimeClasspath += sourceSets.main.get().runtimeClasspath
-}
 
 repositories {
     maven("https://maven.wagyourtail.xyz/releases") {
@@ -39,7 +40,7 @@ repositories {
     }
 }
 
-unimined.minecraft(sourceSets.main.get(), forgeDowngraded) {
+unimined.minecraft {
     version(project.properties["minecraft_version"] as String)
 
     mappings {
@@ -49,32 +50,19 @@ unimined.minecraft(sourceSets.main.get(), forgeDowngraded) {
 
     minecraftForge {
         loader(project.properties["forge_version"] as String)
-//        mixinConfig("modid.mixins.json")
-    }
-
-    defaultRemapJar = false
-
-    if (sourceSet == sourceSets.main.get()) {
-        runs.off = true
-    }
-
-    if (sourceSet == forgeDowngraded) {
-        remap(jvmdg.defaultShadeTask.get(), "remapJar") {
-            archiveClassifier = "final"
-        }
     }
 }
 
 dependencies {
     "modImplementation"("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:"+project.properties["unimixins_version"]+":dev")
 
-    "forgeDowngradedImplementation"("xyz.wagyourtail.jvmdowngrader:jvmdowngrader-java-api:${jvmdg.version}:downgraded-8")
-    "forgeDowngradedImplementation"(jvmdg.defaultTask.get().outputs.files)
-
 }
 
-tasks.compileJava {
-    options.release.set(17)
+// allow mixin extra on old forge
+tasks.getByName<RemapJarTask>("remapJar") {
+    mixinRemap {
+        enableMixinExtra()
+    }
 }
 
 tasks.build {
