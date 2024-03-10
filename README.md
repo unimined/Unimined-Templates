@@ -1,8 +1,4 @@
-This template creates a Jarmod project that will compile to having static, Jarmod patches to the official minecraft jar.
-
-you can disable that with `compiletimeTransforms`, but then the user is required to load the mod via https://github.com/unimined/JarModAgent as that's the backend for the dev env.
-
-The benefit to using JarModAgent is that it'll use [ClassTransform](https://github.com/Lenni0451/ClassTransform)
+This template creates a 1.7.10 project that compiles with java 17, but can run on java 8 by taking advantage of [JVM Downgrader](https://github.com/unimined/JvmDowngrader)
 
 # What is Unimined
 Unimined is an alternative and extensible gradle plugin for modding minecraft with *any* environment (or well, I don't support a couple yet, they are planned).
