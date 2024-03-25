@@ -2,7 +2,7 @@ import xyz.wagyourtail.unimined.api.minecraft.task.RemapJarTask
 
 plugins {
     id("java")
-    id("xyz.wagyourtail.unimined") version "1.2.0-SNAPSHOT"
+    id("xyz.wagyourtail.unimined") version "1.2.0"
     id("xyz.wagyourtail.jvmdowngrader") version "0.0.1-SNAPSHOT"
 }
 
@@ -35,26 +35,52 @@ repositories {
         name = "sponge"
     }
     mavenCentral()
+    ivy {
+        name = "BTA"
+        url = uri("https://github.com/Better-than-Adventure/bta-download-repo/releases/download/")
+        patternLayout {
+            artifact("v[revision]/bta.[ext]")
+        }
+        content {
+            includeModule("com.github.better-than-adventure", "bta")
+        }
+        metadataSources {
+            artifact()
+        }
+    }
     maven("https://jitpack.io") {
         name = "jitpack"
     }
 }
 
 unimined.minecraft {
+    side("client")
     version(project.properties["minecraft_version"] as String)
 
-    mappings {
-        searge()
-        mcp("stable", "12-1.7.10")
+    merged {
+        legacyFabric {
+            loader(project.properties["fabric_version"] as String)
+
+            // "hacks" to not have mappings
+            prodNamespace("official")
+            devMappings = null
+            customIntermediaries = true
+        }
+        jarMod {}
     }
 
-    minecraftForge {
-        loader(project.properties["forge_version"] as String)
+    mappings {
+        devNamespace("official")
+        devFallbackNamespace("official")
+    }
+
+    runs.config("client") {
+        jvmArgs += listOf("-Dfabric.gameVersion=$minecraftVersion")
     }
 }
 
 dependencies {
-    "modImplementation"("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:"+project.properties["unimixins_version"]+":dev")
+    "jarMod"("com.github.better-than-adventure:bta:1.7.7.0_02")
 
 }
 
