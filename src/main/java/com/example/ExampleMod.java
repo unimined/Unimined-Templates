@@ -1,15 +1,29 @@
 package com.example;
 
-import cpw.mods.fml.common.Mod;
-import net.minecraft.client.Minecraft;
+import xyz.wagyourtail.unimined.expect.annotation.Environment;
+import xyz.wagyourtail.unimined.expect.annotation.ExpectPlatform;
 
-@Mod(modid = "examplemod", version = "1.0.0", name = "ExampleMod", acceptedMinecraftVersions = "[1.7.10]")
-public record ExampleMod() {
+public class ExampleMod {
 
     public ExampleMod() {
-        System.out.println("Hello Forge!");
-        System.out.println(Minecraft.getMinecraft());
+
     }
 
+    public static void run() {
+        runPlatform();
+        try {
+            clientOnly();
+        } catch (Throwable ignored) {}
+    }
+
+    @ExpectPlatform
+    public static void runPlatform() {
+        throw new AssertionError();
+    }
+
+    @Environment(Environment.EnvType.CLIENT)
+    public static void clientOnly() {
+        System.out.println("hello client");
+    }
 
 }
