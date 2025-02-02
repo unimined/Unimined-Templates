@@ -2,8 +2,7 @@ import xyz.wagyourtail.unimined.api.minecraft.task.RemapJarTask
 
 plugins {
     id("java")
-    id("xyz.wagyourtail.unimined") version "1.2.0-SNAPSHOT"
-    id("xyz.wagyourtail.jvmdowngrader") version "0.0.1-SNAPSHOT"
+    id("xyz.wagyourtail.unimined") version "1.3.12"
 }
 
 group = "com.example"
@@ -45,7 +44,7 @@ unimined.minecraft {
 
     mappings {
         searge()
-        mcp("stable", "12-1.7.10")
+        mcp("stable", "18-1.8")
     }
 
     minecraftForge {
@@ -54,17 +53,13 @@ unimined.minecraft {
 }
 
 dependencies {
-    "modImplementation"("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:"+project.properties["unimixins_version"]+":dev")
+//    "modImplementation"("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:"+project.properties["unimixins_version"]+":dev")
 
 }
 
-// allow mixin extra on old forge
-tasks.getByName<RemapJarTask>("remapJar") {
-    mixinRemap {
-        enableMixinExtra()
-    }
-}
-
-tasks.build {
-    dependsOn("remapJar")
-}
+//// allow mixin extra on old forge
+//tasks.getByName<RemapJarTask>("remapJar") {
+//    mixinRemap {
+//        enableMixinExtra()
+//    }
+//}
