@@ -12,6 +12,7 @@ repositories {
 unimined {
     minecraft {
         version = "26.3"
+
         loader("forge", "26.3-66.1.5")
 
     }
