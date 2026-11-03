@@ -12,6 +12,7 @@ repositories {
 unimined {
     bta {
         version = "26.3"
+
     }
 }
 
