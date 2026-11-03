@@ -11,8 +11,9 @@ repositories {
 
 unimined {
     bta {
-        version = "26.3"
-
+        version = "7.3_04"
+        side = Side.MERGED
+        loader("bta-babric", "0.18.4-bta.11")
     }
 }
 
@@ -20,6 +21,6 @@ unimined {
         id = "unimined"
         name = "Unimined"
         version = "1.0.0"
-
+    loader("bta-babric") { }
     }
 
