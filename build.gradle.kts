@@ -11,15 +11,15 @@ repositories {
 
 unimined {
     bta {
-        version = "26.3"
+        version = "8.0.1"
 
     }
-}
 
     mod {
-        id = "unimined"
-        name = "Unimined"
+        id = "examplemod"
+        name = "examplemod"
         version = "1.0.0"
 
     }
+}
 
