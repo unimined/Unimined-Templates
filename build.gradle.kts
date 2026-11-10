@@ -12,15 +12,16 @@ repositories {
 unimined {
     reindev {
         version = "2.9_03"
-        side = Side.SERVER
+        side = xyz.wagyourtail.unimined.api.spec.Side.SERVER
         loader("foxloader")
     }
-}
 
     mod {
-        id = "unimined"
-        name = "Unimined"
+        id = "examplemod"
+        name = "examplemod"
         version = "1.0.0"
-    loader("foxloader") { }
+        loader("foxloader") {}
+
     }
+}
 
