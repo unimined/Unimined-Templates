@@ -21,4 +21,5 @@ unimined {
 
 dependencies {
     implementation(project(":common"))
+    // modImplementation("maven:coord") — remapped mods
 }

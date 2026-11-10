@@ -17,7 +17,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Unimined"
+rootProject.name = "examplemod"
 include("common")
 include("fabric")
 include("forge")
