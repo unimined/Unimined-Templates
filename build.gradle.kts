@@ -11,15 +11,16 @@ repositories {
 
 unimined {
     nsss {
-        side = Side.CLIENT
+        version = "1.0"
+        side = xyz.wagyourtail.unimined.api.spec.Side.CLIENT
         file("dist.jar")
     }
-}
 
     mod {
-        id = "unimined"
-        name = "Unimined"
+        id = "examplemod"
+        name = "examplemod"
         version = "1.0.0"
 
     }
+}
 
