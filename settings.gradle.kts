@@ -16,4 +16,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Unimined"
+rootProject.name = "examplemod"
