@@ -12,7 +12,7 @@ repositories {
 
 unimined {
     minecraft {
-        version = "26.3"
+        version = providers.gradleProperty("minecraft_version").get()
 
 
 

@@ -12,9 +12,9 @@ repositories {
 
 unimined {
     minecraft {
-        version = "26.3"
+        version = providers.gradleProperty("minecraft_version").get()
 
-        loader("forge", "26.3-66.1.5")
+        loader("forge", providers.gradleProperty("forge_version").get())
 
     }
 }
