@@ -11,18 +11,18 @@ repositories {
 
 unimined {
     minecraft {
-        version = "1.2.5"
+        version = providers.gradleProperty("minecraft_version").get()
         side = xyz.wagyourtail.unimined.api.spec.Side.CLIENT
-        loader("fg1", "0.1.5")
+        loader("fg1", providers.gradleProperty("fg1_version").get())
         mappings {
-            mcp("legacy",  "6.2-1.2.5")
+            mcp(providers.gradleProperty("mcp_channel").get(), providers.gradleProperty("mcp_version").get())
         }
     }
 
     mod {
-        id = "examplemod"
+        id = providers.gradleProperty("modid").get()
         name = "examplemod"
-        version = "1.0.0"
+        version = providers.gradleProperty("version").get()
         loader("fg1") {}
 
     }
