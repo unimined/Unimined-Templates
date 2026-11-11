@@ -11,16 +11,16 @@ repositories {
 
 unimined {
     minecraft {
-        version = "1.4.7"
+        version = providers.gradleProperty("minecraft_version").get()
 
-        loader("fg1", "0.1.5")
+        loader("fg1", providers.gradleProperty("fg1_version").get())
 
     }
 
     mod {
-        id = "examplemod"
+        id = providers.gradleProperty("modid").get()
         name = "examplemod"
-        version = "1.0.0"
+        version = providers.gradleProperty("version").get()
         loader("fg1") {}
 
     }
