@@ -11,15 +11,15 @@ repositories {
 
 unimined {
     reindev {
-        version = "2.9_03"
+        version = providers.gradleProperty("minecraft_version").get()
         side = xyz.wagyourtail.unimined.api.spec.Side.SERVER
         loader("foxloader")
     }
 
     mod {
-        id = "examplemod"
+        id = providers.gradleProperty("modid").get()
         name = "examplemod"
-        version = "1.0.0"
+        version = providers.gradleProperty("version").get()
         loader("foxloader") {}
 
     }
