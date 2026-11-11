@@ -11,15 +11,15 @@ repositories {
 
 unimined {
     nsss {
-        version = "1.0"
+        version = providers.gradleProperty("minecraft_version").get()
         side = xyz.wagyourtail.unimined.api.spec.Side.CLIENT
         file("dist.jar")
     }
 
     mod {
-        id = "examplemod"
+        id = providers.gradleProperty("modid").get()
         name = "examplemod"
-        version = "1.0.0"
+        version = providers.gradleProperty("version").get()
 
     }
 }
