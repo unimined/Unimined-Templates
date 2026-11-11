@@ -11,21 +11,21 @@ repositories {
 
 unimined {
     minecraft {
-        version = "b1.7.3"
+        version = providers.gradleProperty("minecraft_version").get()
         side = xyz.wagyourtail.unimined.api.spec.Side.MERGED
-        loader("ornithe", "0.19.5")
+        loader("ornithe", providers.gradleProperty("ornithe_version").get())
         mappings {
             ornitheGenVersion = 2
-            feather(2, 2)
+            feather(providers.gradleProperty("feather_mappings").get().toInt(), 2)
             nests(1)
             sparrow(2)
         }
     }
 
     mod {
-        id = "examplemod"
+        id = providers.gradleProperty("modid").get()
         name = "examplemod"
-        version = "1.0.0"
+        version = providers.gradleProperty("version").get()
         loader("ornithe") {}
 
     }
