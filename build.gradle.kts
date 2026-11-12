@@ -14,6 +14,7 @@ unimined {
         version = providers.gradleProperty("minecraft_version").get()
         side = xyz.wagyourtail.unimined.api.spec.Side.CLIENT
         file("dist.jar")
+
     }
 
     mod {
