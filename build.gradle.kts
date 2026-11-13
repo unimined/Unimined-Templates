@@ -1,6 +1,6 @@
 plugins {
     java
-    id("xyz.wagyourtail.unimined") version "2.0.1"
+    id("xyz.wagyourtail.unimined") version "2.0.2"
 }
 
 
