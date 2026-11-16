@@ -11,14 +11,14 @@ repositories {
 
 unimined {
     bta {
-        version = providers.gradleProperty("minecraft_version").get()
+        version.set(providers.gradleProperty("minecraft_version"))
 
     }
 
     mod {
-        id = providers.gradleProperty("modid").get()
+        id.set(providers.gradleProperty("modid"))
         name = "examplemod"
-        version = providers.gradleProperty("version").get()
+        version.set(providers.gradleProperty("version"))
 
     }
 }
