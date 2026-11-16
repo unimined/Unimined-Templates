@@ -6,12 +6,12 @@ plugins {
 
 repositories {
     mavenCentral()
-
+    maven("https://maven.wagyourtail.xyz/releases/")
 }
 
 unimined {
     minecraft {
-        version = providers.gradleProperty("minecraft_version").get()
+        version.set(providers.gradleProperty("minecraft_version"))
 
         loader("jarmod", providers.gradleProperty("jarmod_version").get())
         mappings {
@@ -20,9 +20,9 @@ unimined {
     }
 
     mod {
-        id = providers.gradleProperty("modid").get()
+        id.set(providers.gradleProperty("modid"))
         name = "examplemod"
-        version = providers.gradleProperty("version").get()
+        version.set(providers.gradleProperty("version"))
         loader("jarmod") {}
 
     }
