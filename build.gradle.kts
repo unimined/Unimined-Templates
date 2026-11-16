@@ -13,7 +13,7 @@ unimined {
     minecraft {
         version.set(providers.gradleProperty("minecraft_version"))
 
-        loader("fg1", providers.gradleProperty("fg1_version").get())
+        fg1(providers.gradleProperty("fg1_version").get())
 
     }
 
