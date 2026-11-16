@@ -13,7 +13,7 @@ unimined {
     minecraft {
         version.set(providers.gradleProperty("minecraft_version"))
         side = xyz.wagyourtail.unimined.api.spec.Side.CLIENT
-        loader("fg1", providers.gradleProperty("fg1_version").get())
+        fg1(providers.gradleProperty("fg1_version").get())
         mappings {
             mcp(providers.gradleProperty("mcp_channel").get(), providers.gradleProperty("mcp_version").get())
         }
