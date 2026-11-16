@@ -13,7 +13,7 @@ unimined {
     minecraft {
         version.set(providers.gradleProperty("minecraft_version"))
         side = xyz.wagyourtail.unimined.api.spec.Side.MERGED
-        loader("ornithe", providers.gradleProperty("ornithe_version").get())
+        ornithe(providers.gradleProperty("ornithe_version").get())
         mappings {
             ornitheGenVersion = 2
             feather(providers.gradleProperty("feather_mappings").get().toInt(), 2)
