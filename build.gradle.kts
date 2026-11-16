@@ -13,7 +13,7 @@ unimined {
     bta {
         version.set(providers.gradleProperty("minecraft_version"))
         side = xyz.wagyourtail.unimined.api.spec.Side.MERGED
-        loader("bta-babric", "0.18.4-bta.11")
+        loader("bta-babric", providers.gradleProperty("bta_babric_version").get())
     }
 
     mod {
