@@ -12,7 +12,7 @@ dependencyResolutionManagement {
     repositories {
         mavenLocal()
         mavenCentral()
-
+        maven("https://maven.wagyourtail.xyz/releases/")
     }
 }
 
