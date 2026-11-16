@@ -11,7 +11,7 @@ repositories {
 
 unimined {
     minecraft {
-        version = providers.gradleProperty("minecraft_version").get()
+        version.set(providers.gradleProperty("minecraft_version"))
 
         loader("forge", providers.gradleProperty("forge_version").get())
         mappings {
@@ -20,9 +20,9 @@ unimined {
     }
 
     mod {
-        id = providers.gradleProperty("modid").get()
+        id.set(providers.gradleProperty("modid"))
         name = "examplemod"
-        version = providers.gradleProperty("version").get()
+        version.set(providers.gradleProperty("version"))
         loader("forge") {}
 
     }
